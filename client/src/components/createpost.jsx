@@ -5,11 +5,11 @@ import Input from "./common/input";
 import Form from "./common/form";
 import http from "../services/httpService";
 import { api } from "../config.js";
-import { createpost } from "../services/postCreateService";
+import { createpost } from "../services/postService";
 
 class NewPost extends Form {
   state = {
-    data: { title: "", description: "", tags: [] },
+    data: { Content: "", description: "", tags: [] },
     errors: { title: "", description: "", tags: [] },
     tags: [],
   };
@@ -43,10 +43,11 @@ class NewPost extends Form {
       }
     }
   }
+  // TODO: get login session to get submit author
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { response } = await createpost(data);
+      const { response } = await createpost(user, data, crypto.randomBytes(10).toString('hex'), 0);
       console.log(response);
       window.location = "/dashboard";
     } catch (ex) {}
@@ -66,8 +67,8 @@ class NewPost extends Form {
               <Input
                 value={data.title}
                 onChange={this.handleChange}
-                label="Title"
-                name="title"
+                label="Question"
+                name="Question"
                 type="text"
                 error={errors.title}
               />

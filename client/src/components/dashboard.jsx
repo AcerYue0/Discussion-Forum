@@ -43,6 +43,9 @@ class Dashboard extends Component {
     for (let i in allposts) {
       const post = allposts[i];
       const { tags } = post;
+      if (post.Type === 1) {
+        break;
+      }
       for (let j in tags) {
         if (tags[j].name === selectedTag.name) {
           filtered.push(post);
@@ -95,7 +98,7 @@ class Dashboard extends Component {
               />
             </div>
             <Pagination
-              itemCount={filtered.length}
+              itemCount={postLen}
               pageSize={pageSize}
               currentPage={currentPage}
               onPageChange={this.handlePageChange}

@@ -2,7 +2,7 @@ import React from "react";
 import Joi from "joi-browser";
 import {ToastContainer } from "react-toastify";
 import Form from "./common/form";
-import { createreply } from "../services/replyCreateService";
+import { createreply } from "../services/postService";
 import { Redirect } from "react-router-dom";
 
 class PostReply extends Form {
@@ -15,10 +15,11 @@ class PostReply extends Form {
   schema = { 
     comment: Joi.string().required().min(5).label("Comment"),
   };
+  // TODO: get login session to get submit author
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: reply } = await createreply(data, this.props.id);
+      const { data: reply } = await createreply(user, data, crypto.randomBytes(10).toString('hex'), 1);
       window.location = `/post/${this.props.id}`;
     } catch (ex) {}
   };

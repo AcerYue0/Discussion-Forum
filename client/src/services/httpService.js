@@ -2,7 +2,9 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-axios.defaults.headers.common["x-auth-token"] = localStorage.getItem("token");
+let AuthToken = process.env.AUTHTOKEN;
+
+axios.defaults.headers["Authorization"] = AuthToken
 
 axios.interceptors.response.use(null, (error) => {
   const expectedError =
