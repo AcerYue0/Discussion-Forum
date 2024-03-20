@@ -9,13 +9,12 @@ import { createpost } from "../services/postService";
 
 class NewPost extends Form {
   state = {
-    data: { Content: "", description: "", tags: [] },
-    errors: { title: "", description: "", tags: [] },
+    data: { Content: "", tags: [] },
+    errors: { Content: "", tags: [] },
     tags: [],
   };
   schema = {
-    title: Joi.string().required().min(10).label("Title"),
-    description: Joi.string().required().min(5).label("Description"),
+    Content: Joi.string().required().min(10).label("Content"),
     tags: Joi.array(),
   };
   handleTagChange = (tagID) => {
@@ -26,8 +25,7 @@ class NewPost extends Form {
     if (index === -1) newtags.push(tagID);
     else newtags.splice(index, 1);
     data = {
-      title: data.title,
-      description: data.description,
+      Content: data.Content,
       tags: newtags,
     };
     console.log(data);
@@ -65,27 +63,13 @@ class NewPost extends Form {
           >
             <form onSubmit={this.handleSubmit}>
               <Input
-                value={data.title}
+                value={data.Content}
                 onChange={this.handleChange}
                 label="Question"
                 name="Question"
                 type="text"
-                error={errors.title}
+                error={errors.Content}
               />
-              <div className="form-group">
-                <label htmlFor="description">Description</label>
-                <textarea
-                  value={data.description}
-                  onChange={this.handleChange}
-                  name="description"
-                  type="description"
-                  id="description"
-                  className="form-control"
-                />
-                {errors.description && (
-                  <div className="alert-info">{errors.description}</div>
-                )}
-              </div>
               <div className="form-group">
                 <label htmlFor="tags">Related Tags</label>
                 <br />
